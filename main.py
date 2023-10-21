@@ -14,13 +14,14 @@ POSE_PAIRS = [ ["Neck", "RShoulder"], ["Neck", "LShoulder"], ["RShoulder", "RElb
                ["LHip", "LKnee"], ["LKnee", "LAnkle"], ["Neck", "Nose"], ["Nose", "REye"],
                ["REye", "REar"], ["Nose", "LEye"], ["LEye", "LEar"] ]
 
+
 def start_cap():
     cap = cv2.VideoCapture(0)
 
     return cap
 
 
-def detect_light_changes(cap):
+def detect_light_and_pose(cap):
     ret, _ = cap.read()
     if not ret:
         print("No First Frame.")
@@ -54,6 +55,7 @@ def detect_light_changes(cap):
             cv2.circle(frame, (cx, cy), 10, (0, 255, 0), -1)
 
 
+        # Getting the pose detection
         blob = cv2.dnn.blobFromImage(frame, 1.0, (368, 368), (127.5, 127.5, 127.5), swapRB=True, crop=False)
         net.setInput(blob)
         output = net.forward()
@@ -96,9 +98,9 @@ def detect_light_changes(cap):
 
 if __name__ == "__main__":
     cap = start_cap()
-    detect_light_changes(cap)
+    detect_light_and_pose(cap)
 
-    t1 = Process(target=detect_light_changes)
+    t1 = Process(target=detect_light_and_pose)
 
     t1.start()
 

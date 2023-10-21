@@ -56,7 +56,7 @@ def detect_light_and_pose(cap):
 
 
         # Getting the pose detection
-        blob = cv2.dnn.blobFromImage(frame, 1.0, (368, 368), (127.5, 127.5, 127.5), swapRB=True, crop=False)
+        blob = cv2.dnn.blobFromImage(frame, 1.0, (400, 400), (127.5, 127.5, 127.5), swapRB=True, crop=False)
         net.setInput(blob)
         output = net.forward()
 
